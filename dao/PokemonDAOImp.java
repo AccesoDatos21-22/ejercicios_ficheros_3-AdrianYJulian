@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.cert.CertificateParsingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,12 +63,19 @@ public class PokemonDAOImp implements PokemonDAO {
             if (ficheropokemon.exists()) {
                 //Leemos el fichero y lo pasamos a una lista
                 List<String> pokemonsExistentes = Files.readAllLines(rutaPokemon);
-
+                boolean comprobador = false;
                 String pokemon = name + ";" + life + ";" + atack + ";" + defense
                         + ";" + specialAttack + ";" + specialdefense + ";" + speed;
 
+                for (String pokemonsExistente : pokemonsExistentes) {
+                    String[] corte = pokemonsExistente.split(";");
+                    if (corte[0].contains(name)) {
+                        comprobador = true;
+                        break;
+                    }
+                }
                 //Comprobamos si el pokemon que se quiere insertar existe en el fichero
-                if (!pokemonsExistentes.contains(pokemon)){
+                if (!comprobador){
                     bw.write(pokemon);
                     bw.newLine();
                 }
