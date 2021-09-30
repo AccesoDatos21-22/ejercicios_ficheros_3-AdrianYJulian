@@ -1,15 +1,16 @@
 package dao;
 
+import modelo.Pokemon;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
-import modelo.Alumno;
-import modelo.Pokemon;
 
 public class PokemonDAOImp implements PokemonDAO {
 
@@ -52,13 +53,24 @@ public class PokemonDAOImp implements PokemonDAO {
 
     @Override
     public void escribirPokemon(String ruta, String name, int life, int atack, int defense, int specialAttack, int specialdefense, int speed) {
+        //Accedemos a la ruta definida por el usuario
         File ficheropokemon = new File(ruta);
-        try(BufferedWriter bw=new BufferedWriter(new FileWriter(ficheropokemon,true))) {
+        Path rutaPokemon = Paths.get(ruta);
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheropokemon, true))) {
+            //Comprobamos si el archivo existe
             if (ficheropokemon.exists()) {
-				String pokemon = name + ";"+life+";"+atack+";"+defense+";"+specialAttack+";"+specialdefense+";"+ speed;
-				bw.write(pokemon);
-				bw.newLine();
-                System.out.println("funciono");
+                //Leemos el fichero y lo pasamos a una lista
+                List<String> pokemonsExistentes = Files.readAllLines(rutaPokemon);
+
+                String pokemon = name + ";" + life + ";" + atack + ";" + defense
+                        + ";" + specialAttack + ";" + specialdefense + ";" + speed;
+
+                //Comprobamos si el pokemon que se quiere insertar existe en el fichero
+                if (!pokemonsExistentes.contains(pokemon)){
+                    bw.write(pokemon);
+                    bw.newLine();
+                }
             } else {
                 ficheropokemon.createNewFile();
             }
