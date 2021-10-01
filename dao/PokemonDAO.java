@@ -45,7 +45,7 @@ public interface PokemonDAO {
 	 * Nombre;nivel;Vida;ataque;defensa;ataqueEspecial;DefensaEspecial;velocidad
 	 * En caso de existir el fichero, no se borrará, se seguirán añadiendo pokemons
 	 * al final.
-	 *	
+	 *
 	 * @param ruta fichero de texto
 	 */
 	public void escribirPokemon(String ruta, String name, int life, int atack, int defense, int specialAttack, int specialdefense, int speed);

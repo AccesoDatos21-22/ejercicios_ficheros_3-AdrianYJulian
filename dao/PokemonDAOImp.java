@@ -2,14 +2,10 @@ package dao;
 
 import modelo.Pokemon;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.cert.CertificateParsingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +87,18 @@ public class PokemonDAOImp implements PokemonDAO {
 
     @Override
     public void imprimirPokemon(String ruta) {
-
+        try(BufferedReader bw=new BufferedReader(new FileReader(ruta))) {
+            String []split;
+            String frase= bw.readLine();
+            while (frase!=null){
+                split=frase.split(";");
+                System.out.print("name: "+split[0]+" level: "+1+" HP: "+split[1]+ " attack: "+split[2]+ " defense: "+split[3]+" Special attack: "+split[4]+ " Special defense: "+split[5]+" speed: "+split[6]);
+                frase=bw.readLine();
+                System.out.println("");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
