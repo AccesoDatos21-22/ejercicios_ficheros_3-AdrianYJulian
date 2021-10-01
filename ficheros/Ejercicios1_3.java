@@ -2,7 +2,7 @@ package ficheros;
 
 import interfaces.InterfazEjercicios1_3;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,12 @@ public class Ejercicios1_3 implements InterfazEjercicios1_3 {
     @Override
     public void escribefrases(List<String> cadenas, Path ruta) {
 		try {
-            Files.write(ruta, cadenas);
+            OutputStream oos=new FileOutputStream(ruta.toFile());
+            for (int i = 0; i < cadenas.size(); i++) {
+                oos.write(cadenas.get(i).getBytes());
+                oos.write("\n".getBytes());
+            }
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
