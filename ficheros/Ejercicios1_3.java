@@ -3,9 +3,7 @@ package ficheros;
 import interfaces.InterfazEjercicios1_3;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -27,7 +25,7 @@ public class Ejercicios1_3 implements InterfazEjercicios1_3 {
 			System.out.println("Introduzca una frase");
 			continuar = escaner.nextLine();
             if (!continuar.equals("-1")) {
-                lista.add(escaner.nextLine());
+                lista.add(continuar);
             }
         }
         return lista;
@@ -42,8 +40,7 @@ public class Ejercicios1_3 implements InterfazEjercicios1_3 {
     @Override
     public void escribefrases(List<String> cadenas, Path ruta) {
 		try {
-			cadenas=Files.readAllLines(ruta);
-			cadenas.forEach(System.out::println);
+            Files.write(ruta, cadenas);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
