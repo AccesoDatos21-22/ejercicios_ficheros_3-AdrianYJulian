@@ -49,8 +49,11 @@ public class Ejercicios1_3 implements InterfazEjercicios1_3 {
 
     @Override
     public void leerFrases(Path ruta) {
-        // TODO Auto-generated method stub
-
+        try {
+            Files.readAllLines(ruta).forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

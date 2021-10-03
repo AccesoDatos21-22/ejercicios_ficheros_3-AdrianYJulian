@@ -9,6 +9,6 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Ejercicios1_3 ejercicios1_3 = new Ejercicios1_3();
-        ejercicios1_3.escribefrases(ejercicios1_3.getFrases(scanner),ejercicios1_3.getNombre(scanner));
+        ejercicios1_3.leerFrases(ejercicios1_3.getNombre(scanner));
     }
 }
