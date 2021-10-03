@@ -2,8 +2,12 @@ package ficheros;
 
 import interfaces.InterfazEjercicios1_3;
 
-import java.io.*;
-import java.nio.file.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,8 +26,8 @@ public class Ejercicios1_3 implements InterfazEjercicios1_3 {
         List<String> lista = new ArrayList<>();
         System.out.println("Si desea salir introduzca -1");
         while (!continuar.equals("-1")) {
-			System.out.println("Introduzca una frase");
-			continuar = escaner.nextLine();
+            System.out.println("Introduzca una frase");
+            continuar = escaner.nextLine();
             if (!continuar.equals("-1")) {
                 lista.add(continuar);
             }
@@ -38,18 +42,24 @@ public class Ejercicios1_3 implements InterfazEjercicios1_3 {
     }
 
     @Override
-    public void escribefrases(List<String> cadenas, Path ruta) {
-		try(BufferedWriter bw=Files.newBufferedWriter(Paths.get(ruta.toString()))){
-            for (int i = 0; i < cadenas.size(); i++) {
-                bw.write(cadenas.get(i));
-                bw.newLine();            }
+    public void escribefrases(Scanner scanner, Path ruta) {
+        String frase = "";
+        try (BufferedWriter bw = Files.newBufferedWriter(Paths.get(ruta.toString()), StandardOpenOption.APPEND)) {
+            System.out.println("Si desea salir introduzca -1");
+            while (!frase.equals("-1")) {
+                System.out.println("Introduzca una frase");
+                frase = scanner.nextLine();
+                if (!frase.equals("-1")) {
+                    bw.write(frase);
+                    bw.newLine();
+                }
+            }
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
+    }
 
     @Override
     public void leerFrases(Path ruta) {
