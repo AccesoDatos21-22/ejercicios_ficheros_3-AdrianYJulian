@@ -53,13 +53,12 @@ public class Ejercicios1_3 implements InterfazEjercicios1_3 {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
-            try (BufferedWriter bufferedWriter = Files.newBufferedWriter(archivoFlotantes, StandardOpenOption.APPEND)) {
-                bufferedWriter.write(String.valueOf(numeroDecimal));
-                bufferedWriter.newLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        }
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(archivoFlotantes, StandardOpenOption.APPEND)) {
+            bufferedWriter.write(String.valueOf(numeroDecimal));
+            bufferedWriter.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
