@@ -77,7 +77,16 @@ public class Ejercicios1_3 implements InterfazEjercicios1_3 {
 
     @Override
     public List<Float> leerFlotante(String ruta) {
-        return null;
+        Path archivoFlotantes = Paths.get(ruta);
+        List<Float> listaFlotantes = new ArrayList<>();
+        try (DataInputStream dataInputStream = new DataInputStream(Files.newInputStream(archivoFlotantes))) {
+            while (dataInputStream.available()>0) {
+                listaFlotantes.add(dataInputStream.readFloat());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return listaFlotantes;
     }
 
 
