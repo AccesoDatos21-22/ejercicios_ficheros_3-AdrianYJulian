@@ -2,12 +2,14 @@ package ficheros;
 
 import interfaces.InterfazEjercicios1_3;
 
-import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -53,20 +55,24 @@ public class Ejercicios1_3 implements InterfazEjercicios1_3 {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
-            try (BufferedWriter bufferedWriter = Files.newBufferedWriter(archivoFlotantes, StandardOpenOption.APPEND)) {
-                bufferedWriter.write(String.valueOf(numeroDecimal));
-                bufferedWriter.newLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        }
+        try (DataOutputStream dataOutputStream = new DataOutputStream(Files.newOutputStream(archivoFlotantes, StandardOpenOption.APPEND))) {
+            dataOutputStream.writeFloat(numeroDecimal);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public List<Float> leerFlotante(String ruta) {
-        // TODO Auto-generated method stub
-        return null;
+        Path archivoFlotantes = Paths.get(ruta);
+        List<Float> listaFlotantes = new ArrayList<>();
+        try (DataInputStream dataInputStream = new DataInputStream(Files.newInputStream(archivoFlotantes))) {
+            listaFlotantes.add(dataInputStream.readFloat());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return listaFlotantes;
     }
 
 
