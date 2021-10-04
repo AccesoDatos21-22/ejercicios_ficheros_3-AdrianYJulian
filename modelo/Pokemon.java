@@ -8,8 +8,7 @@ import java.io.Serializable;
 public class Pokemon implements Serializable {
     private String nombre;
     private int nivel, vida, ataque, defensa, ataqueEspecial, defensaEspecial, velocidad;
-    eu.iamgio.pokedex.pokemon.Pokemon getPokemon;
-
+    private eu.iamgio.pokedex.pokemon.Pokemon getPokemon;
 
     public Pokemon(int id) {
         getPokemon = getPokemon.fromId(id);
@@ -22,6 +21,7 @@ public class Pokemon implements Serializable {
         this.defensaEspecial = getPokemon.getStat(Stat.Type.SPECIAL_DEFENSE).getBaseStat();
         this.velocidad = getPokemon.getStat(Stat.Type.SPEED).getBaseStat();
     }
+
     public Pokemon(String nombre) {
         getPokemon = getPokemon.fromName(nombre);
         this.nivel = 1;
@@ -32,6 +32,36 @@ public class Pokemon implements Serializable {
         this.ataqueEspecial = getPokemon.getStat(Stat.Type.SPECIAL_ATTACK).getBaseStat();
         this.defensaEspecial = getPokemon.getStat(Stat.Type.SPECIAL_DEFENSE).getBaseStat();
         this.velocidad = getPokemon.getStat(Stat.Type.SPEED).getBaseStat();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Pokemon pokemon = (Pokemon) o;
+
+        if (nivel != pokemon.nivel) return false;
+        if (vida != pokemon.vida) return false;
+        if (ataque != pokemon.ataque) return false;
+        if (defensa != pokemon.defensa) return false;
+        if (ataqueEspecial != pokemon.ataqueEspecial) return false;
+        if (defensaEspecial != pokemon.defensaEspecial) return false;
+        if (velocidad != pokemon.velocidad) return false;
+        return nombre != null ? nombre.equals(pokemon.nombre) : pokemon.nombre == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = nombre != null ? nombre.hashCode() : 0;
+        result = 31 * result + nivel;
+        result = 31 * result + vida;
+        result = 31 * result + ataque;
+        result = 31 * result + defensa;
+        result = 31 * result + ataqueEspecial;
+        result = 31 * result + defensaEspecial;
+        result = 31 * result + velocidad;
+        return result;
     }
 
     @Override
