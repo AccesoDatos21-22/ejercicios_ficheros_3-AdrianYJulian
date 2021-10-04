@@ -6,11 +6,14 @@
 
 package dao;
 
+import java.io.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import modelo.Alumno;
+import modelo.Aula;
 
 /**
  *  @descrition AulaDAOImp
@@ -86,7 +89,30 @@ public class AulaDAOImp implements AulaDAO{
 	 * @param ruta
 	 */
 	public void escribeAlumnos(Path ruta) {
+Scanner sc=new Scanner(System.in);
+try(BufferedWriter bw=new BufferedWriter(new FileWriter(new File(ruta.toUri())))) {
 
+	for (int i = 0; i < 2; i++) {
+
+		System.out.println("Escribe el nombre");
+		String nombre=sc.nextLine();
+		System.out.println("Escribe el apellido");
+		String apellido=sc.nextLine();
+		System.out.println("Escribe la direccion y el numero");
+		String direccion=sc.nextLine();
+		int numero=sc.nextInt();
+		System.out.println("Escribe el año de nacimiento");
+		int nacimiento=sc.nextInt();
+		bw.write(nombre+"\t"+apellido+"\t"+nacimiento+"\t"+direccion+"\t"+numero);
+		bw.newLine();
+		sc.nextLine();
+	}
+}catch (IOException e){
+	e.printStackTrace();
+}
+
+
+sc.close();
 	}
 
 	/**
@@ -95,8 +121,20 @@ public class AulaDAOImp implements AulaDAO{
 	 * @param ruta
 	 */
 	public void leeAlumnos(Path ruta) {
+String[] split;
+		Aula aula1=new Aula(5);
+		try(BufferedReader br=new BufferedReader(new FileReader(new File(ruta.toUri())))) {
+			String alumno = br.readLine();
+			while (alumno!=null) {
+				split = alumno.split("\t");
+				alumno=br.readLine();
+				Alumno temp=new Alumno(split[0],split[1],Integer.parseInt(split[2]),split[3],Integer.parseInt(split[4]));
+				System.out.println(temp.toString());
+			}
 
-
+		}catch (IOException e){
+			e.printStackTrace();
+		}
 	}
 
 }
