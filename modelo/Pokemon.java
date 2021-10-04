@@ -2,12 +2,12 @@ package modelo;
 
 import eu.iamgio.pokedex.pokemon.Stat;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
 
 //Nombre, nivel, Vida, ataque, defensa, ataqueEspecial, DefensaEspecial y velocidad.
 public class Pokemon implements Serializable {
@@ -145,10 +145,26 @@ public class Pokemon implements Serializable {
     }
 
     public void escribirPokemon(String ruta, Pokemon pokemon) {
-        try(ObjectOutputStream objectOutputStream = new ObjectOutputStream(Files.newOutputStream(Paths.get(ruta), StandardOpenOption.APPEND))) {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(Files.newOutputStream(Paths.get(ruta), StandardOpenOption.APPEND))) {
             objectOutputStream.writeObject(pokemon);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Pokemon> leerPokemon(String ruta) {
+        List<Pokemon> pokemonList = new ArrayList<>();
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(Files.newInputStream(Paths.get(ruta)))) {
+            while (true) {
+                pokemonList.add((Pokemon) objectInputStream.readObject());
+            }
+        } catch (EOFException e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return pokemonList;
     }
 }
