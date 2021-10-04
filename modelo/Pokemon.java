@@ -8,30 +8,27 @@ import java.io.Serializable;
 public class Pokemon implements Serializable {
     private String nombre;
     private int nivel, vida, ataque, defensa, ataqueEspecial, defensaEspecial, velocidad;
-    private eu.iamgio.pokedex.pokemon.Pokemon getPokemon;
 
     public Pokemon(int id) {
-        getPokemon = getPokemon.fromId(id);
         this.nivel = 1;
-        this.nombre = getPokemon.getName();
-        this.vida = getPokemon.getStat(Stat.Type.HP).getBaseStat();
-        this.ataque = getPokemon.getStat(Stat.Type.ATTACK).getBaseStat();
-        this.defensa = getPokemon.getStat(Stat.Type.DEFENSE).getBaseStat();
-        this.ataqueEspecial = getPokemon.getStat(Stat.Type.SPECIAL_ATTACK).getBaseStat();
-        this.defensaEspecial = getPokemon.getStat(Stat.Type.SPECIAL_DEFENSE).getBaseStat();
-        this.velocidad = getPokemon.getStat(Stat.Type.SPEED).getBaseStat();
+        this.nombre = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getName();
+        this.vida = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getStat(Stat.Type.HP).getBaseStat();
+        this.ataque = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getStat(Stat.Type.ATTACK).getBaseStat();
+        this.defensa = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getStat(Stat.Type.DEFENSE).getBaseStat();
+        this.ataqueEspecial = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getStat(Stat.Type.SPECIAL_ATTACK).getBaseStat();
+        this.defensaEspecial = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getStat(Stat.Type.SPECIAL_DEFENSE).getBaseStat();
+        this.velocidad = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getStat(Stat.Type.SPEED).getBaseStat();
     }
 
     public Pokemon(String nombre) {
-        getPokemon = getPokemon.fromName(nombre);
         this.nivel = 1;
-        this.nombre = getPokemon.getName();
-        this.vida = getPokemon.getStat(Stat.Type.HP).getBaseStat();
-        this.ataque = getPokemon.getStat(Stat.Type.ATTACK).getBaseStat();
-        this.defensa = getPokemon.getStat(Stat.Type.DEFENSE).getBaseStat();
-        this.ataqueEspecial = getPokemon.getStat(Stat.Type.SPECIAL_ATTACK).getBaseStat();
-        this.defensaEspecial = getPokemon.getStat(Stat.Type.SPECIAL_DEFENSE).getBaseStat();
-        this.velocidad = getPokemon.getStat(Stat.Type.SPEED).getBaseStat();
+        this.nombre = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getName();
+        this.vida = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getStat(Stat.Type.HP).getBaseStat();
+        this.ataque = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getStat(Stat.Type.ATTACK).getBaseStat();
+        this.defensa = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getStat(Stat.Type.DEFENSE).getBaseStat();
+        this.ataqueEspecial = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getStat(Stat.Type.SPECIAL_ATTACK).getBaseStat();
+        this.defensaEspecial = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getStat(Stat.Type.SPECIAL_DEFENSE).getBaseStat();
+        this.velocidad = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getStat(Stat.Type.SPEED).getBaseStat();
     }
 
     @Override
