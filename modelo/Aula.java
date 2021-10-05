@@ -19,13 +19,14 @@ import java.util.List;
 public class Aula {
     private List<Alumno> alumnos;
     private int numalumnos; //atributo para controlar el número real de elementos que tiene nuestro almacén
-
+    private int tamano1;
     /**
      * Constructor del Almacén con un determinado tamano
      * @param tamano
      */
     public Aula(int tamano){
-        alumnos=new ArrayList<Alumno>(tamano);
+    	tamano1=tamano;
+        alumnos=new ArrayList<Alumno>(tamano1);
         numalumnos=0;
         
     }
@@ -42,7 +43,7 @@ public class Aula {
      * @return
      */
     public boolean estaLLeno(){
-        return numalumnos==alumnos.size();
+        return numalumnos==tamano1;
     }
     /**
      * Anade un nuevo elemento al almacén si hay sitio

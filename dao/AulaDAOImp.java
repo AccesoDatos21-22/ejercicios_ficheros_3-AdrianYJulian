@@ -16,13 +16,13 @@ import modelo.Alumno;
 import modelo.Aula;
 
 /**
- *  @descrition AulaDAOImp
- *	@author Laura y Carlos
- *  @date 18/9/2021
- *  @version 1.0
- *  @license GPLv3
+ * @descrition AulaDAOImp
+ * @author Laura y Carlos
+ * @date 18/9/2021
+ * @version 1.0
+ * @license GPLv3
  */
-public class AulaDAOImp implements AulaDAO{
+public class AulaDAOImp implements AulaDAO {
 	private List<Alumno> alumnos;
 	private int numalumnos; // atributo para controlar el número real de
 							// elementos que tiene nuestro almacén
@@ -62,7 +62,7 @@ public class AulaDAOImp implements AulaDAO{
 	 * @param valor a anadir al almacén
 	 */
 	public void add(Alumno alumno) {
-		
+
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class AulaDAOImp implements AulaDAO{
 	 * Imprime por pantalla los elementos del almacén
 	 */
 	public void informacionAlumnos() {
-		
+
 	}
 
 	/**
@@ -89,30 +89,29 @@ public class AulaDAOImp implements AulaDAO{
 	 * @param ruta
 	 */
 	public void escribeAlumnos(Path ruta) {
-Scanner sc=new Scanner(System.in);
-try(BufferedWriter bw=new BufferedWriter(new FileWriter(new File(ruta.toUri())))) {
+		Scanner sc = new Scanner(System.in);
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File(ruta.toUri())))) {
 
-	for (int i = 0; i < 2; i++) {
+			for (int i = 0; i < 2; i++) {
 
-		System.out.println("Escribe el nombre");
-		String nombre=sc.nextLine();
-		System.out.println("Escribe el apellido");
-		String apellido=sc.nextLine();
-		System.out.println("Escribe la direccion y el numero");
-		String direccion=sc.nextLine();
-		int numero=sc.nextInt();
-		System.out.println("Escribe el año de nacimiento");
-		int nacimiento=sc.nextInt();
-		bw.write(nombre+"\t"+apellido+"\t"+nacimiento+"\t"+direccion+"\t"+numero);
-		bw.newLine();
-		sc.nextLine();
-	}
-}catch (IOException e){
-	e.printStackTrace();
-}
+				System.out.println("Escribe el nombre");
+				String nombre = sc.nextLine();
+				System.out.println("Escribe el apellido");
+				String apellido = sc.nextLine();
+				System.out.println("Escribe la direccion y el numero");
+				String direccion = sc.nextLine();
+				int numero = sc.nextInt();
+				System.out.println("Escribe el año de nacimiento");
+				int nacimiento = sc.nextInt();
+				bw.write(nombre + "\t" + apellido + "\t" + nacimiento + "\t" + direccion + "\t" + numero);
+				bw.newLine();
+				sc.nextLine();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-
-sc.close();
+		sc.close();
 	}
 
 	/**
@@ -121,18 +120,21 @@ sc.close();
 	 * @param ruta
 	 */
 	public void leeAlumnos(Path ruta) {
-String[] split;
-		Aula aula1=new Aula(5);
-		try(BufferedReader br=new BufferedReader(new FileReader(new File(ruta.toUri())))) {
+		String[] split;
+		Aula aula1 = new Aula(5);
+		try (BufferedReader br = new BufferedReader(new FileReader(new File(ruta.toUri())))) {
 			String alumno = br.readLine();
-			while (alumno!=null) {
+			while (alumno != null) {
+				
 				split = alumno.split("\t");
-				alumno=br.readLine();
-				Alumno temp=new Alumno(split[0],split[1],Integer.parseInt(split[2]),split[3],Integer.parseInt(split[4]));
+				alumno = br.readLine();
+				Alumno temp = new Alumno(split[0], split[1], Integer.parseInt(split[2]), split[3],
+						Integer.parseInt(split[4]));
 				System.out.println(temp.toString());
+				aula1.add(temp);
 			}
-
-		}catch (IOException e){
+			aula1.informacionAlumnos();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
