@@ -7,12 +7,14 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
 
 //Nombre, nivel, Vida, ataque, defensa, ataqueEspecial, DefensaEspecial y velocidad.
 public class Pokemon implements Serializable {
     private String nombre;
     private int nivel, vida, ataque, defensa, ataqueEspecial, defensaEspecial, velocidad;
+    private List<Pokemon>listaPokemon;
 
     public Pokemon(int id) {
         this.nivel = 1;
@@ -23,6 +25,7 @@ public class Pokemon implements Serializable {
         this.ataqueEspecial = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getStat(Stat.Type.SPECIAL_ATTACK).getBaseStat();
         this.defensaEspecial = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getStat(Stat.Type.SPECIAL_DEFENSE).getBaseStat();
         this.velocidad = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getStat(Stat.Type.SPEED).getBaseStat();
+        this.listaPokemon = new ArrayList<>();
     }
 
     public Pokemon(String nombre) {
@@ -34,6 +37,7 @@ public class Pokemon implements Serializable {
         this.ataqueEspecial = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getStat(Stat.Type.SPECIAL_ATTACK).getBaseStat();
         this.defensaEspecial = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getStat(Stat.Type.SPECIAL_DEFENSE).getBaseStat();
         this.velocidad = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getStat(Stat.Type.SPEED).getBaseStat();
+        this.listaPokemon = new ArrayList<>();
     }
 
     @Override
@@ -145,8 +149,18 @@ public class Pokemon implements Serializable {
     }
 
     public void escribirPokemon(String ruta, Pokemon pokemon) {
-        try(ObjectOutputStream objectOutputStream = new ObjectOutputStream(Files.newOutputStream(Paths.get(ruta), StandardOpenOption.APPEND))) {
-            objectOutputStream.writeObject(pokemon);
+        boolean comprobador=false;
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(Files.newOutputStream(Paths.get(ruta)))) {
+            for (int i = 0; i < listaPokemon.size(); i++) {
+                if (listaPokemon.get(i).equals(pokemon)) {
+                    comprobador=true;
+                }
+            }
+            if (!comprobador) {
+                this.listaPokemon.add(pokemon);
+                objectOutputStream.writeObject(listaPokemon);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
