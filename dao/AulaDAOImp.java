@@ -7,6 +7,7 @@
 package dao;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +91,7 @@ public class AulaDAOImp implements AulaDAO {
 	 */
 	public void escribeAlumnos(Path ruta) {
 		Scanner sc = new Scanner(System.in);
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File(ruta.toUri())))) {
+		try (BufferedWriter bw = Files.newBufferedWriter(ruta)) {
 
 			for (int i = 0; i < 2; i++) {
 
@@ -122,18 +123,14 @@ public class AulaDAOImp implements AulaDAO {
 	public void leeAlumnos(Path ruta) {
 		String[] split;
 		Aula aula1 = new Aula(5);
-		try (BufferedReader br = new BufferedReader(new FileReader(new File(ruta.toUri())))) {
-			String alumno = br.readLine();
-			while (alumno != null) {
-				
-				split = alumno.split("\t");
-				alumno = br.readLine();
+		try {
+			List<String> nombre=Files.readAllLines(ruta);
+			for (int i = 0; i < nombre.size(); i++) {
+				split=nombre.get(i).split("\t");
 				Alumno temp = new Alumno(split[0], split[1], Integer.parseInt(split[2]), split[3],
 						Integer.parseInt(split[4]));
 				System.out.println(temp.toString());
-				aula1.add(temp);
 			}
-			aula1.informacionAlumnos();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

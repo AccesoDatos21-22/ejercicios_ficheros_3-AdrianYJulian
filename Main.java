@@ -15,7 +15,7 @@ public class Main {
     	
         AulaDAOImp a=new AulaDAOImp(5);
        
-
+//a.escribeAlumnos(Path.of("test.txt"));
         a.leeAlumnos(Path.of("test.txt"));
 
 
