@@ -9,6 +9,6 @@ public class Main {
             p1.escribirPokemon("test.txt",new Pokemon(i));
         }
 
-        p1.leerPokemon("test.txt").forEach(System.out::println);
+        p1.leerPokemon("test.txt","saur").forEach(System.out::println);
     }
 }

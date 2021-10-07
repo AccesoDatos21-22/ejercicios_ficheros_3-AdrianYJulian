@@ -5,10 +5,7 @@ import eu.iamgio.pokedex.pokemon.Stat;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 //Nombre, nivel, Vida, ataque, defensa, ataqueEspecial, DefensaEspecial y velocidad.
 public class Pokemon implements Serializable {
@@ -182,5 +179,21 @@ public class Pokemon implements Serializable {
         }
 
         return pokemonList;
+
+    }
+    public List<Pokemon> leerPokemon(String ruta, String nombre) {
+        List<Pokemon> pokemonList = new ArrayList<>();
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(Files.newInputStream(Paths.get(ruta)))) {
+            pokemonList.addAll((Collection<? extends Pokemon>) objectInputStream.readObject());
+            pokemonList.removeIf(pokemon -> !pokemon.nombre.toLowerCase().contains(nombre.toLowerCase()));
+        } catch (EOFException e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return pokemonList;
+
     }
 }
