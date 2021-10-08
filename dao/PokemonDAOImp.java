@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.cert.CertificateParsingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,8 +54,16 @@ public class PokemonDAOImp implements PokemonDAO {
     @Override
     public void escribirPokemon(String ruta, String name, int life, int atack, int defense, int specialAttack, int specialdefense, int speed) {
         //Accedemos a la ruta definida por el usuario
-        File ficheropokemon = new File(ruta);
-        Path rutaPokemon = Paths.get(ruta);
+        File ficheropokemon;
+        Path rutaPokemon;
+        if (ruta.endsWith(".csv")) {
+            ficheropokemon = new File(ruta);
+            rutaPokemon = Paths.get(ruta);
+        } else {
+            ficheropokemon = new File(ruta + ".csv");
+            rutaPokemon = Paths.get(ruta + ".csv");
+        }
+
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheropokemon, true))) {
             //Comprobamos si el archivo existe
@@ -75,7 +82,7 @@ public class PokemonDAOImp implements PokemonDAO {
                     }
                 }
                 //Comprobamos si el pokemon que se quiere insertar existe en el fichero
-                if (!comprobador){
+                if (!comprobador) {
                     bw.write(pokemon);
                     bw.newLine();
                 }
