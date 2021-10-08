@@ -56,7 +56,7 @@ public interface InterfazEjercicios1_3 {
 	 * @param cadenas
 	 * @param ruta
 	 */
-	public void escribefrases(List<String> cadenas, Path ruta);
+	public void escribefrases(Scanner scanner, Path ruta);
 	
 	/**
 	 * Método que lee frases de un archivo y las muestra por pantalla
