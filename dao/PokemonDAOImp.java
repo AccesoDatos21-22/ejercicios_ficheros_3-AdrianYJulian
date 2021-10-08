@@ -65,7 +65,7 @@ public class PokemonDAOImp implements PokemonDAO {
 
                 for (String pokemonsExistente : pokemonsExistentes) {
                     String[] corte = pokemonsExistente.split(";");
-                    if (corte[0].contains(name)) {
+                    if (corte[0].equals(name)) {
                         comprobador = true;
                         break;
                     }
