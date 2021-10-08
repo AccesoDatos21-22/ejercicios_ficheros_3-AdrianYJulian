@@ -2,10 +2,14 @@ package ficheros;
 
 import interfaces.InterfazEjercicios1_3;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -53,6 +57,52 @@ public class Ejercicios1_3 implements InterfazEjercicios1_3 {
     public void escribefrases(List<String> cadenas, Path ruta) {
         try {
             Files.write(ruta, cadenas);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void escribefrasesOutputStream(List<String> cadenas, Path ruta) {
+        try {
+            OutputStream oos=new FileOutputStream(ruta.toFile());
+            for (int i = 0; i < cadenas.size(); i++) {
+                oos.write(cadenas.get(i).getBytes());
+                oos.write("\n".getBytes());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void escribefrasesBufferedWriter(List<String> cadenas, Path ruta) {
+        try(BufferedWriter bw=Files.newBufferedWriter(Paths.get(ruta.toString()))){
+            for (int i = 0; i < cadenas.size(); i++) {
+                bw.write(cadenas.get(i));
+                bw.newLine();            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void escribefrasesconScanner(Scanner scanner, Path ruta) {
+        String frase = "";
+        try (BufferedWriter bw = Files.newBufferedWriter(Paths.get(ruta.toString()), StandardOpenOption.APPEND)) {
+            System.out.println("Si desea salir introduzca -1");
+            while (!frase.equals("-1")) {
+                System.out.println("Introduzca una frase");
+                frase = scanner.nextLine();
+                if (!frase.equals("-1")) {
+                    bw.write(frase);
+                    bw.newLine();
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
