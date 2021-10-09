@@ -1,8 +1,10 @@
+import dao.AulaDAOImp;
 import dao.PokemonDAOImp;
 import eu.iamgio.pokedex.pokemon.Pokemon;
 import eu.iamgio.pokedex.pokemon.Stat;
 import ficheros.Ejercicios1_3;
 
+import java.nio.file.Path;
 import java.util.Scanner;
 
 public class Main {
@@ -12,6 +14,8 @@ public class Main {
 		PokemonDAOImp pk=new PokemonDAOImp(50);
 		Scanner scanner = new Scanner(System.in);
 		Ejercicios1_3 ejercicios1_3 = new Ejercicios1_3();
+		AulaDAOImp a=new AulaDAOImp(5);
+
 		//Ejercicio1
 		for (int i = 1; i <= 100 ; i++) {
 			tempPokemon = Pokemon.fromId(i);
@@ -36,6 +40,17 @@ public class Main {
         //Ejercicio11
 		ejercicios1_3.leerFlotante("test.dat");
 		//Ejercicio12
+		modelo.Pokemon p1 = new modelo.Pokemon(2);
+		System.out.println(p1);
+		//Ejercicio13
+        p1.escribirPokemon("test.txt",p1);
+        //Ejercicio14
+        p1.leerPokemon("test.txt").forEach(System.out::println);
+		//Ejercicio15
+        p1.leerPokemon("test.txt","saur").forEach(System.out::println);
+        //Ejercicio16
+		a.leeAlumnos(Path.of("test.txt"));
+		//Ejercicio17
 	}
 
 }

@@ -14,7 +14,6 @@ public class Pokemon implements Serializable {
     private List<Pokemon>listaPokemon;
 
     public Pokemon(int id) {
-        getPokemon = getPokemon.fromId(id);
         this.nivel = 1;
         this.nombre = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getName();
         this.vida = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getStat(Stat.Type.HP).getBaseStat();
@@ -27,7 +26,6 @@ public class Pokemon implements Serializable {
     }
 
     public Pokemon(String nombre) {
-        getPokemon = getPokemon.fromName(nombre);
         this.nivel = 1;
         this.nombre = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getName();
         this.vida = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getStat(Stat.Type.HP).getBaseStat();
