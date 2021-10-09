@@ -51,7 +51,7 @@ public class Main {
         //Ejercicio16
 		a.leeAlumnos(Path.of("test.txt"));
 		//Ejercicio17
-		a.leeAlumnos(Path.of("test.txt"));
+		a.leeAlumnosReadAllLines(Path.of("test.txt"));
 	}
 
 }

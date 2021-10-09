@@ -10,8 +10,7 @@ package dao;
 import modelo.Alumno;
 import modelo.Aula;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -19,10 +18,10 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * @descrition AulaDAOImp
  * @author Laura y Carlos
- * @date 18/9/2021
  * @version 1.0
+ * @descrition AulaDAOImp
+ * @date 18/9/2021
  * @license GPLv3
  */
 public class AulaDAOImp implements AulaDAO {
@@ -123,6 +122,26 @@ public class AulaDAOImp implements AulaDAO {
      * @param ruta
      */
     public void leeAlumnos(Path ruta) {
+        String[] split;
+        Aula aula1 = new Aula(5);
+        try (BufferedReader br = new BufferedReader(new FileReader(new File(ruta.toUri())))) {
+            String alumno = br.readLine();
+            while (alumno != null) {
+
+                split = alumno.split("\t");
+                alumno = br.readLine();
+                Alumno temp = new Alumno(split[0], split[1], Integer.parseInt(split[2]), split[3],
+                        Integer.parseInt(split[4]));
+                System.out.println(temp.toString());
+                aula1.add(temp);
+            }
+            aula1.informacionAlumnos();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void leeAlumnosReadAllLines(Path ruta) {
         String[] split;
         Aula aula1 = new Aula(5);
         try {
