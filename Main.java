@@ -30,8 +30,11 @@ public class Main {
 		//Ejercicio8
 		ejercicios1_3.leerFrases(ejercicios1_3.getNombre(scanner));
 		//Ejercicio9
+		ejercicios1_3.escribirFlotante((float) 1.3123132131232131, "test.dat");
 		//Ejercicio10
-		//Ejercicio11
+        ejercicios1_3.imprimirFlotante("test.dat");
+        //Ejercicio11
+		ejercicios1_3.leerFlotante("test.dat");
 		//Ejercicio12
 	}
 
