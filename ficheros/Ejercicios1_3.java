@@ -3,21 +3,23 @@ package ficheros;
 import interfaces.InterfazEjercicios1_3;
 
 import java.io.BufferedWriter;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import interfaces.InterfazEjercicios1_3;
+
 /**
+ * 
  * @author Escribe_aqui_tu_nombre
- * @date
+ * @date 
+ * @version 
  * @license GPLv3
+ *
  */
 public class Ejercicios1_3 implements InterfazEjercicios1_3 {
 
@@ -118,18 +120,34 @@ public class Ejercicios1_3 implements InterfazEjercicios1_3 {
         }
     }
 
-
     @Override
     public void escribirFlotante(float numeroDecimal, String ruta) {
-        // TODO Auto-generated method stub
-
+        Path archivoFlotantes = Paths.get(ruta);
+        if (!Files.exists(archivoFlotantes)) {
+            try {
+                Files.createFile(archivoFlotantes);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(archivoFlotantes, StandardOpenOption.APPEND)) {
+            bufferedWriter.write(String.valueOf(numeroDecimal));
+            bufferedWriter.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public List<Float> leerFlotante(String ruta) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public List<Float> leerFlotante(String ruta) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
+		
+		
 
 
 }
