@@ -35,7 +35,9 @@ public interface InterfazEjercicios1_3 {
 	   * @return lista de números flotante del fichero
 	   */
 	  public List<Float> leerFlotante (String ruta);
-	
+
+	void imprimirFlotante(String ruta);
+
 	/**
 	 * Método que solicita un nombre de archivo
 	 * 
