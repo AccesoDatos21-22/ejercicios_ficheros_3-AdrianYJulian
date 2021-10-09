@@ -2,12 +2,12 @@ package modelo;
 
 import eu.iamgio.pokedex.pokemon.Stat;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 //Nombre, nivel, Vida, ataque, defensa, ataqueEspecial, DefensaEspecial y velocidad.
@@ -151,20 +151,38 @@ public class Pokemon implements Serializable {
     }
 
     public void escribirPokemon(String ruta, Pokemon pokemon) {
-        boolean comprobador=false;
+        boolean comprobador;
+        int cont=0;
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(Files.newOutputStream(Paths.get(ruta)))) {
-            for (int i = 0; i < listaPokemon.size(); i++) {
-                if (listaPokemon.get(i).equals(pokemon)) {
-                    comprobador=true;
-                }
-            }
-            if (!comprobador) {
                 this.listaPokemon.add(pokemon);
-                objectOutputStream.writeObject(listaPokemon);
+            Iterator<Pokemon>it=listaPokemon.iterator();
+            while (it.hasNext()) {
+                if (it.next().equals(pokemon)) {
+                    cont++;
+                    if (cont>1) {
+                        it.remove();
+                    }
+                }
+
             }
+
+                objectOutputStream.writeObject(listaPokemon);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public List<Pokemon> leerPokemon(String ruta) {
+        List<Pokemon> pokemonList = new ArrayList<>();
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(Files.newInputStream(Paths.get(ruta)))) {
+                pokemonList.addAll((Collection<? extends Pokemon>) objectInputStream.readObject());
+        } catch (EOFException e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return pokemonList;
     }
 }
