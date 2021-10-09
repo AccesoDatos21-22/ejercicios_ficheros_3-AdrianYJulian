@@ -18,15 +18,15 @@ import java.util.List;
  */
 public class Aula {
     private List<Alumno> alumnos;
-    private int numalumnos; //atributo para controlar el número real de elementos que tiene nuestro almacén
-
+    private int tamano; //atributo para controlar el número real de elementos que tiene nuestro almacén
+    private int tamano1;
     /**
      * Constructor del Almacén con un determinado tamano
      * @param tamano
      */
     public Aula(int tamano){
-        alumnos=new ArrayList<Alumno>(tamano);
-        numalumnos=0;
+    	this.tamano=tamano;
+        alumnos=new ArrayList<>(tamano);
         
     }
     /**
@@ -42,7 +42,7 @@ public class Aula {
      * @return
      */
     public boolean estaLLeno(){
-        return numalumnos==alumnos.size();
+        return tamano==alumnos.size();
     }
     /**
      * Anade un nuevo elemento al almacén si hay sitio
@@ -51,7 +51,6 @@ public class Aula {
     public void add(Alumno alumno){
         if (!this.estaLLeno()){
             alumnos.add(alumno);
-            numalumnos++;
         }
     }
     /**
