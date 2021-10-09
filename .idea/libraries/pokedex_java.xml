@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="pokedex-java">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/bin/lib/pokedex-java.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
