@@ -2,14 +2,22 @@ package modelo;
 
 import eu.iamgio.pokedex.pokemon.Stat;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 //Nombre, nivel, Vida, ataque, defensa, ataqueEspecial, DefensaEspecial y velocidad.
 public class Pokemon implements Serializable {
     private String nombre;
     private int nivel, vida, ataque, defensa, ataqueEspecial, defensaEspecial, velocidad;
+    private List<Pokemon>listaPokemon;
 
     public Pokemon(int id) {
+        getPokemon = getPokemon.fromId(id);
         this.nivel = 1;
         this.nombre = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getName();
         this.vida = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getStat(Stat.Type.HP).getBaseStat();
@@ -18,9 +26,11 @@ public class Pokemon implements Serializable {
         this.ataqueEspecial = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getStat(Stat.Type.SPECIAL_ATTACK).getBaseStat();
         this.defensaEspecial = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getStat(Stat.Type.SPECIAL_DEFENSE).getBaseStat();
         this.velocidad = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getStat(Stat.Type.SPEED).getBaseStat();
+        this.listaPokemon = new ArrayList<>();
     }
 
     public Pokemon(String nombre) {
+        getPokemon = getPokemon.fromName(nombre);
         this.nivel = 1;
         this.nombre = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getName();
         this.vida = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getStat(Stat.Type.HP).getBaseStat();
@@ -29,6 +39,7 @@ public class Pokemon implements Serializable {
         this.ataqueEspecial = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getStat(Stat.Type.SPECIAL_ATTACK).getBaseStat();
         this.defensaEspecial = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getStat(Stat.Type.SPECIAL_DEFENSE).getBaseStat();
         this.velocidad = eu.iamgio.pokedex.pokemon.Pokemon.fromName(nombre).getStat(Stat.Type.SPEED).getBaseStat();
+        this.listaPokemon = new ArrayList<>();
     }
 
     @Override
@@ -137,5 +148,23 @@ public class Pokemon implements Serializable {
 
     public void setVelocidad(int velocidad) {
         this.velocidad = velocidad;
+    }
+
+    public void escribirPokemon(String ruta, Pokemon pokemon) {
+        boolean comprobador=false;
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(Files.newOutputStream(Paths.get(ruta)))) {
+            for (int i = 0; i < listaPokemon.size(); i++) {
+                if (listaPokemon.get(i).equals(pokemon)) {
+                    comprobador=true;
+                }
+            }
+            if (!comprobador) {
+                this.listaPokemon.add(pokemon);
+                objectOutputStream.writeObject(listaPokemon);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
