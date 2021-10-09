@@ -11,8 +11,8 @@ import java.util.List;
 
 public class PokemonDAOImp implements PokemonDAO {
 
-    private List<Pokemon> pokemones;
-    private int numPokemones; // atributo para controlar el numero real de
+    private final List<Pokemon> pokemones;
+    private final int numPokemones; // atributo para controlar el numero real de
     // elementos que tiene nuestro almacen
 
     /**
@@ -95,14 +95,14 @@ public class PokemonDAOImp implements PokemonDAO {
 
     @Override
     public void imprimirPokemon(String ruta) {
-        try(BufferedReader bw=new BufferedReader(new FileReader(ruta))) {
-            String []split;
-            String frase= bw.readLine();
-            while (frase!=null){
-                split=frase.split(";");
-                System.out.print("name: "+split[0]+" level: "+1+" HP: "+split[1]+ " attack: "+split[2]+ " defense: "+split[3]+" Special attack: "+split[4]+ " Special defense: "+split[5]+" speed: "+split[6]);
-                frase=bw.readLine();
-                System.out.println("");
+        try (BufferedReader bw = new BufferedReader(new FileReader(ruta))) {
+            String[] split;
+            String frase = bw.readLine();
+            while (frase != null) {
+                split = frase.split(";");
+                System.out.print("name: " + split[0] + " level: " + 1 + " HP: " + split[1] + " attack: " + split[2] + " defense: " + split[3] + " Special attack: " + split[4] + " Special defense: " + split[5] + " speed: " + split[6]);
+                frase = bw.readLine();
+                System.out.println();
             }
         } catch (IOException e) {
             e.printStackTrace();

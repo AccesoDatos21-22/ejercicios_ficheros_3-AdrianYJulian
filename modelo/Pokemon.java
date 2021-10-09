@@ -5,13 +5,16 @@ import eu.iamgio.pokedex.pokemon.Stat;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 //Nombre, nivel, Vida, ataque, defensa, ataqueEspecial, DefensaEspecial y velocidad.
 public class Pokemon implements Serializable {
+    private final List<Pokemon> listaPokemon;
     private String nombre;
     private int nivel, vida, ataque, defensa, ataqueEspecial, defensaEspecial, velocidad;
-    private List<Pokemon>listaPokemon;
 
     public Pokemon(int id) {
         this.nivel = 1;
@@ -147,30 +150,31 @@ public class Pokemon implements Serializable {
 
     public void escribirPokemon(String ruta, Pokemon pokemon) {
         boolean comprobador;
-        int cont=0;
+        int cont = 0;
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(Files.newOutputStream(Paths.get(ruta)))) {
-                this.listaPokemon.add(pokemon);
-            Iterator<Pokemon>it=listaPokemon.iterator();
+            this.listaPokemon.add(pokemon);
+            Iterator<Pokemon> it = listaPokemon.iterator();
             while (it.hasNext()) {
                 if (it.next().equals(pokemon)) {
                     cont++;
-                    if (cont>1) {
+                    if (cont > 1) {
                         it.remove();
                     }
                 }
 
             }
 
-                objectOutputStream.writeObject(listaPokemon);
+            objectOutputStream.writeObject(listaPokemon);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     public List<Pokemon> leerPokemon(String ruta) {
         List<Pokemon> pokemonList = new ArrayList<>();
         try (ObjectInputStream objectInputStream = new ObjectInputStream(Files.newInputStream(Paths.get(ruta)))) {
-                pokemonList.addAll((Collection<? extends Pokemon>) objectInputStream.readObject());
+            pokemonList.addAll((Collection<? extends Pokemon>) objectInputStream.readObject());
         } catch (EOFException e) {
         } catch (IOException e) {
             e.printStackTrace();
@@ -181,6 +185,7 @@ public class Pokemon implements Serializable {
         return pokemonList;
 
     }
+
     public List<Pokemon> leerPokemon(String ruta, String nombre) {
         List<Pokemon> pokemonList = new ArrayList<>();
         try (ObjectInputStream objectInputStream = new ObjectInputStream(Files.newInputStream(Paths.get(ruta)))) {

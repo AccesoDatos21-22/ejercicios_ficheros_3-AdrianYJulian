@@ -8,14 +8,17 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Scanner;
 
 class Ejercicios1_3Test {
 
-    private Ejercicios1_3 ejercicios1_3 = new Ejercicios1_3();
+    private Ejercicios1_3 ejercicios1_3;
 
     @BeforeEach
     void setUp() {
+        ejercicios1_3 = new Ejercicios1_3();
     }
 
     @Test
@@ -33,5 +36,22 @@ class Ejercicios1_3Test {
     @Test
     void leerFlotante() {
         Assumptions.assumeFalse(ejercicios1_3.leerFlotante("test.dat").getClass() == (List.of(1.123)).getClass(), "Comprobamos que nos traiga una lista de floats");
+    }
+
+    @Test
+    void getFrases() {
+        Scanner sc = null;
+        try {
+            List<String> lista = List.of("asdasd", "asdasd", "asdasd", "asdasd", "asdasd", "asdasd", "asdasd", "asdasd", "-1");
+            Files.write(Paths.get("testjunit"), lista);
+            sc = new Scanner(Paths.get("testjunit").toFile());
+            List<String> list = ejercicios1_3.getFrases(sc);
+            sc.close();
+            Files.deleteIfExists(Paths.get("testjunit"));
+            //El fichero tiene 9 lineas predifinidas pero la ultima es -1 para acabar el metodo
+            Assumptions.assumeTrue(list.size() == 8, "Comprobacion que agrega correctamente objetos a la lista");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

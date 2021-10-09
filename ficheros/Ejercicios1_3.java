@@ -167,7 +167,7 @@ public class Ejercicios1_3 implements InterfazEjercicios1_3 {
         Path archivoFlotantes = Paths.get(ruta);
         List<Float> listaFlotantes = new ArrayList<>();
         try (DataInputStream dataInputStream = new DataInputStream(Files.newInputStream(archivoFlotantes))) {
-            while (dataInputStream.available()>0) {
+            while (dataInputStream.available() > 0) {
                 listaFlotantes.add(dataInputStream.readFloat());
             }
         } catch (IOException e) {
@@ -175,7 +175,6 @@ public class Ejercicios1_3 implements InterfazEjercicios1_3 {
         }
         return listaFlotantes;
     }
-
 
 
 }
