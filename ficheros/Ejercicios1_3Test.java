@@ -36,11 +36,11 @@ class Ejercicios1_3Test {
     @Test
     void leerFlotante() {
         try {
-            Files.deleteIfExists(Paths.get("testjunit"));
             for (int i = 0; i < 9 ; i++) {
                 ejercicios1_3.escribirFlotante((float) i, "testjunit");
             }
             Assumptions.assumeTrue(ejercicios1_3.leerFlotante("testjunit").size() == 9, "Comprobamos que lee el numero indicado de floats");
+            Files.deleteIfExists(Paths.get("testjunit"));
         } catch (IOException e) {
             e.printStackTrace();
         }
