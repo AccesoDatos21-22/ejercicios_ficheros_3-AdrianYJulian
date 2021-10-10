@@ -35,7 +35,15 @@ class Ejercicios1_3Test {
 
     @Test
     void leerFlotante() {
-        Assumptions.assumeFalse(ejercicios1_3.leerFlotante("test.dat").getClass() == (List.of(1.123)).getClass(), "Comprobamos que nos traiga una lista de floats");
+        try {
+            Files.deleteIfExists(Paths.get("testjunit"));
+            for (int i = 0; i < 9 ; i++) {
+                ejercicios1_3.escribirFlotante((float) i, "testjunit");
+            }
+            Assumptions.assumeTrue(ejercicios1_3.leerFlotante("testjunit").size() == 9, "Comprobamos que lee el numero indicado de floats");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
