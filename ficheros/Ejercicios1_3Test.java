@@ -41,6 +41,7 @@ class Ejercicios1_3Test {
             }
             Assumptions.assumeTrue(ejercicios1_3.leerFlotante("testjunit").size() == 9, "Comprobamos que lee el numero indicado de floats");
             Files.deleteIfExists(Paths.get("testjunit"));
+           
         } catch (IOException e) {
             e.printStackTrace();
         }
