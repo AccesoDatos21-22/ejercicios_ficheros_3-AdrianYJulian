@@ -46,6 +46,7 @@ public class AulaDAOImp implements AulaDAO {
      * @return true si está vacio
      */
     public boolean estaVacio() {
+
         return alumnos.size() == 0;
     }
 
@@ -55,6 +56,7 @@ public class AulaDAOImp implements AulaDAO {
      * @return
      */
     public boolean estaLLeno() {
+
         return alumnos.size() >= this.numalumnos;
     }
 
