@@ -15,7 +15,17 @@ public class Pokemon implements Serializable {
     private final List<Pokemon> listaPokemon;
     private String nombre;
     private int nivel, vida, ataque, defensa, ataqueEspecial, defensaEspecial, velocidad;
-
+    public Pokemon(String nombre, int nivel, int vida, int ataque, int defensa, int ataqueEspecial, int defensaEspecial, int velocidad) {
+        this.listaPokemon = new ArrayList<>();
+        this.nombre = nombre;
+        this.nivel = nivel;
+        this.vida = vida;
+        this.ataque = ataque;
+        this.defensa = defensa;
+        this.ataqueEspecial = ataqueEspecial;
+        this.defensaEspecial = defensaEspecial;
+        this.velocidad = velocidad;
+    }
     public Pokemon(int id) {
         this.nivel = 1;
         this.nombre = eu.iamgio.pokedex.pokemon.Pokemon.fromId(id).getName();
@@ -128,6 +138,8 @@ public class Pokemon implements Serializable {
         return ataqueEspecial;
     }
 
+
+
     public void setAtaqueEspecial(int ataqueEspecial) {
         this.ataqueEspecial = ataqueEspecial;
     }
@@ -149,10 +161,30 @@ public class Pokemon implements Serializable {
     }
 
     public void escribirPokemon(String ruta, Pokemon pokemon) {
-        boolean comprobador;
         int cont = 0;
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(Files.newOutputStream(Paths.get(ruta)))) {
             this.listaPokemon.add(pokemon);
+            Iterator<Pokemon> it = listaPokemon.iterator();
+            while (it.hasNext()) {
+                if (it.next().equals(pokemon)) {
+                    cont++;
+                    if (cont > 1) {
+                        it.remove();
+                    }
+                }
+
+            }
+
+            objectOutputStream.writeObject(listaPokemon);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void escribirPokemon(String ruta, List<Pokemon> pokemon) {
+        int cont = 0;
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(Files.newOutputStream(Paths.get(ruta)))) {
+            this.listaPokemon.addAll(pokemon);
             Iterator<Pokemon> it = listaPokemon.iterator();
             while (it.hasNext()) {
                 if (it.next().equals(pokemon)) {
