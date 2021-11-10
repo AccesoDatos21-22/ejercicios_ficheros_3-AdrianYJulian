@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class PokemonDAOImp implements PokemonDAO {
@@ -27,23 +28,30 @@ public class PokemonDAOImp implements PokemonDAO {
 
     @Override
     public boolean estaVacio() {
-        return false;
+        return this.pokemones.size() == 0;
     }
 
     @Override
     public boolean estaLLeno() {
-        return false;
+        return this.pokemones.size() == this.numPokemones;
+
+
     }
 
 
     @Override
     public void add(Pokemon pokemon) {
-
+        pokemones.add(pokemon);
     }
 
 
     @Override
     public boolean eliminar(Pokemon pokemon) {
+
+        if (this.pokemones.removeIf(pokemon1 -> pokemon1.getNombre().equals(pokemon.getNombre()))) {
+            System.out.println("pokemon eliminado");
+        }
+
         return false;
     }
 
@@ -111,16 +119,87 @@ public class PokemonDAOImp implements PokemonDAO {
 
     @Override
     public void escribirPokemon(String ruta, Pokemon pokemon) {
+        File ficheropokemon;
+        Path rutaPokemon;
+        if (ruta.endsWith(".csv")) {
+            ficheropokemon = new File(ruta);
+            rutaPokemon = Paths.get(ruta);
+        } else {
+            ficheropokemon = new File(ruta + ".csv");
+            rutaPokemon = Paths.get(ruta + ".csv");
+        }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheropokemon, true))) {
+            //Comprobamos si el archivo existe
+            if (ficheropokemon.exists()) {
+                //Leemos el fichero y lo pasamos a una lista
+                List<String> pokemonsExistentes = Files.readAllLines(rutaPokemon);
+                boolean comprobador = false;
+                String name = pokemon.getNombre();
+
+                for (String pokemonsExistente : pokemonsExistentes) {
+                    String[] corte = pokemonsExistente.split(",");
+                    corte[0] = corte[0].substring(corte[0].lastIndexOf("=") + 2, corte[0].lastIndexOf("'"));
+                    if (corte[0].equals(name)) {
+                        comprobador = true;
+                        break;
+                    }
+                }
+                //Comprobamos si el pokemon que se quiere insertar existe en el fichero
+                if (!comprobador) {
+                    bw.write(String.valueOf(pokemon));
+                    bw.newLine();
+                }
+            } else {
+                ficheropokemon.createNewFile();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public List<Pokemon> leerPokemon(String ruta) {
+        try (BufferedReader bw = new BufferedReader(new FileReader(ruta))) {
+            String[] split;
+            String frase = bw.readLine();
+            while (frase != null) {
+                split = frase.split(",");
+                for (int i = 0; i < split.length; i++) {
+                    if (i == 0) {
+                        split[i] = split[i].substring(split[i].lastIndexOf("=") + 2, split[i].lastIndexOf("'"));
+                    }
+                    split[i] = split[i].replaceAll("\\D", "");
+                }
+                this.pokemones.add(new Pokemon(split[0], 1, Integer.parseInt(split[2]), Integer.parseInt(split[3]), Integer.parseInt(split[4]), Integer.parseInt(split[5]), Integer.parseInt(split[6]), Integer.parseInt(split[7])));
+                frase = bw.readLine();
+            }
+            return this.pokemones;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 
     @Override
     public List<Pokemon> leerPokemon(String ruta, String nombre) {
-        return null;
+
+        List<Pokemon> pokemonList = new ArrayList<>();
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(Files.newInputStream(Paths.get(ruta)))) {
+            pokemonList.addAll((Collection<? extends Pokemon>) objectInputStream.readObject());
+            pokemonList.removeIf(pokemon -> !pokemon.getNombre().toLowerCase().contains(nombre.toLowerCase()));
+        } catch (EOFException e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return pokemonList;
+    }
+
+    public List<Pokemon> getPokemones() {
+        return pokemones;
     }
 }

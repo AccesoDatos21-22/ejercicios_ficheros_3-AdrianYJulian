@@ -64,7 +64,7 @@ public class AulaDAOImp implements AulaDAO {
      * @param valor a anadir al almacén
      */
     public void add(Alumno alumno) {
-
+this.alumnos.add(alumno);
     }
 
     /**
@@ -82,7 +82,10 @@ public class AulaDAOImp implements AulaDAO {
      * Imprime por pantalla los elementos del almacén
      */
     public void informacionAlumnos() {
-
+        System.out.println("El aula tiene los siguientes alumnos:");
+        for (int j = 0; j < alumnos.size(); j++) {
+            System.out.println(alumnos.get(j).toString() + " ");
+        }
     }
 
     /**
@@ -100,15 +103,18 @@ public class AulaDAOImp implements AulaDAO {
                 String nombre = sc.nextLine();
                 System.out.println("Escribe el apellido");
                 String apellido = sc.nextLine();
-                System.out.println("Escribe la direccion y el numero");
+                System.out.println("Escribe la direccion");
                 String direccion = sc.nextLine();
+                System.out.println("y el numero");
                 int numero = sc.nextInt();
                 System.out.println("Escribe el año de nacimiento");
                 int nacimiento = sc.nextInt();
                 bw.write(nombre + "\t" + apellido + "\t" + nacimiento + "\t" + direccion + "\t" + numero);
                 bw.newLine();
                 sc.nextLine();
+                this.alumnos.add(new Alumno(nombre,apellido,nacimiento,direccion,numero));
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
