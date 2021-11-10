@@ -46,7 +46,7 @@ public class AulaDAOImp implements AulaDAO {
      * @return true si está vacio
      */
     public boolean estaVacio() {
-        return false;
+        return alumnos.size() == 0;
     }
 
     /**
@@ -55,7 +55,7 @@ public class AulaDAOImp implements AulaDAO {
      * @return
      */
     public boolean estaLLeno() {
-        return false;
+        return alumnos.size() >= this.numalumnos;
     }
 
     /**
@@ -64,7 +64,7 @@ public class AulaDAOImp implements AulaDAO {
      * @param valor a anadir al almacén
      */
     public void add(Alumno alumno) {
-this.alumnos.add(alumno);
+        this.alumnos.add(alumno);
     }
 
     /**
@@ -74,8 +74,8 @@ this.alumnos.add(alumno);
      * @return true si elimina el elemento, false en caso contrario
      */
     public boolean eliminar(Alumno alumno) {
+        this.alumnos.removeIf(alumno1 -> alumno1.getNombre().equals(alumno.getNombre()));
         return false;
-
     }
 
     /**
@@ -112,7 +112,7 @@ this.alumnos.add(alumno);
                 bw.write(nombre + "\t" + apellido + "\t" + nacimiento + "\t" + direccion + "\t" + numero);
                 bw.newLine();
                 sc.nextLine();
-                this.alumnos.add(new Alumno(nombre,apellido,nacimiento,direccion,numero));
+                this.alumnos.add(new Alumno(nombre, apellido, nacimiento, direccion, numero));
             }
 
         } catch (IOException e) {
